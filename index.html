@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#102b24"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Game Creator"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/icon-192.png"><title>Game Creator</title>
+<style>
+:root{--bg:#f3f6f4;--panel:#fff;--ink:#15251f;--muted:#718078;--green:#146b45;--green2:#e4f3eb;--line:#e3eae5;--dark:#102b24;--gold:#e5b94c;--red:#c64c4c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{background:linear-gradient(125deg,#102b24,#1b5139);color:#fff;padding:22px max(18px,calc((100% - 1080px)/2)) 18px}
+.brand{display:flex;align-items:center;gap:11px}.ball{width:42px;height:42px;border-radius:14px;background:#ffffff1c;display:grid;place-items:center;font-size:23px}.brand h1{font-size:21px;margin:0;letter-spacing:.5px}.brand small{display:block;color:#bdd5c7;font-size:11px;letter-spacing:1.6px}
+.headerline{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:19px}.headerline h2{font-size:25px;margin:0}.season{font-size:12px;color:#d2e2d8;background:#ffffff18;padding:7px 10px;border-radius:20px}
+ .menu-toggle{display:none;border:1px solid #ffffff45;background:#ffffff18;color:#fff;border-radius:10px;padding:8px 10px;font-size:18px;cursor:pointer}.app-shell{display:flex;min-height:calc(100vh - 112px)}nav{width:238px;flex:0 0 238px;display:flex;flex-direction:column;gap:4px;padding:18px 13px;background:#fff;border-right:1px solid var(--line);position:sticky;top:0;height:calc(100vh - 0px);overflow-y:auto;z-index:20}nav button{width:100%;text-align:left;border:0;background:transparent;color:var(--muted);font-weight:700;padding:11px 13px;border-radius:10px;white-space:nowrap;cursor:pointer}nav button.active{background:var(--green2);color:var(--green)}.nav-label{font-size:10px;font-weight:900;letter-spacing:1.3px;color:#9aa79f;padding:14px 12px 5px}.nav-label:first-child{padding-top:4px}.main-wrap{flex:1;min-width:0}main{max-width:1080px;margin:0 auto;padding:20px 20px 70px}.sidebar-backdrop{display:none}.page{display:none}.page.active{display:block}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.record-stats{grid-template-columns:repeat(5,1fr)}.stat,.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:15px}.stat small,.muted{color:var(--muted)}.stat strong{display:block;font-size:27px;margin-top:4px}.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:22px 0 12px}.sectionhead h3{margin:0;font-size:18px}.btn{border:0;background:var(--green);color:#fff;font-weight:700;border-radius:10px;padding:10px 14px;cursor:pointer}.btn.secondary{background:#edf3ef;color:var(--green)}.btn.danger{background:#fff0f0;color:var(--red)}.btn:disabled{opacity:.45;cursor:not-allowed}.row{display:flex;align-items:center;gap:9px}.between{justify-content:space-between}.field{display:flex;flex-direction:column;gap:5px;margin:9px 0}.field label{font-size:12px;color:var(--muted);font-weight:700}.field input,.field select{border:1px solid var(--line);border-radius:9px;padding:11px;background:#fff;color:var(--ink);font:inherit;min-width:0;width:100%}.formrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}.teamlist{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.active-country-list{display:block}.country-group{margin-top:16px}.country-group:first-child{margin-top:0}.country-heading{display:flex;align-items:center;gap:9px;margin:0 0 9px;padding:9px 12px;background:#eaf2ed;border:1px solid var(--line);border-radius:10px;color:var(--green);font-size:14px;font-weight:800}.country-heading small{margin-left:auto;color:var(--muted);font-weight:600;font-size:11px}.country-teams{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.team{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}.crest{width:36px;height:36px;border-radius:11px;background:var(--green2);display:grid;place-items:center;font-weight:800;color:var(--green);flex:none}.team .name{font-weight:700;flex:1;min-width:0;overflow-wrap:anywhere}.team small{display:block;color:var(--muted);font-size:11px}.tablewrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:14px}table{width:100%;border-collapse:collapse;min-width:650px;font-size:13px}th,td{padding:11px 9px;border-bottom:1px solid var(--line);text-align:center;white-space:nowrap}th{background:#f7faf8;color:var(--muted);font-size:11px;letter-spacing:.4px}td:first-child,th:first-child{text-align:left;padding-left:14px}.rank{font-weight:800;color:var(--muted);width:34px}.club{display:flex;align-items:center;gap:8px;font-weight:700}.mini{width:25px;height:25px;border-radius:8px;background:var(--green2);display:grid;place-items:center;color:var(--green);font-size:10px;font-weight:800}.pts{font-weight:900;color:var(--green)}.form{display:flex;justify-content:center;gap:4px;min-width:112px}.form-dot{width:19px;height:19px;border-radius:50%;display:inline-grid;place-items:center;color:#fff;font-size:10px;font-weight:900;line-height:1}.form-dot.w{background:#16834b}.form-dot.d{background:#8b9490}.form-dot.l{background:#cf4545}.form-empty{background:#e8eeea;color:#8a9690}.roundbar{display:flex;align-items:center;gap:10px}.roundbar select{max-width:150px}.match{display:grid;grid-template-columns:1fr 76px 1fr;align-items:center;gap:10px;padding:12px 10px;border-bottom:1px solid var(--line)}.match:last-child{border:0}.match .home{text-align:right}.match .away{text-align:left}.scorebox{display:flex;align-items:center;justify-content:center;gap:5px}.scorebox input{width:31px;text-align:center;border:1px solid var(--line);border-radius:7px;padding:7px 2px;font-weight:800}.scorebox span{color:var(--muted)}.matchname{font-weight:700;font-size:13px}.status{font-size:10px;color:var(--muted)}.pill{border-radius:20px;background:#f0f4f1;color:var(--muted);padding:4px 8px;font-size:11px}.empty{text-align:center;padding:28px 12px;color:var(--muted)}.notice{background:#fff8e6;border:1px solid #f1dfaa;color:#735b1b;padding:11px 13px;border-radius:11px;font-size:12px;margin:12px 0}.actions{display:flex;gap:7px;flex-wrap:wrap}.hidden{display:none!important}.modal{position:fixed;inset:0;background:#071b14a8;display:none;align-items:center;justify-content:center;padding:16px;z-index:10}.modal.open{display:flex}.modalbox{background:#fff;border-radius:16px;padding:20px;width:min(440px,100%);max-height:90vh;overflow:auto}.modalbox h3{margin:0 0 12px}.footer{color:var(--muted);font-size:11px;text-align:center;margin-top:30px}
+@media(max-width:760px){.record-stats{grid-template-columns:repeat(2,1fr)}header{padding:16px 14px 14px}.menu-toggle{display:block}.brand{gap:8px}.headerline h2{font-size:21px}.grid{grid-template-columns:repeat(2,1fr)}.teamlist{grid-template-columns:1fr}.formrow{grid-template-columns:1fr}.match{grid-template-columns:1fr 76px 1fr;gap:5px}.matchname{font-size:12px}.stat strong{font-size:23px}main{padding:15px 12px 60px}.app-shell{min-height:calc(100vh - 100px)}nav{position:fixed;left:0;top:0;bottom:0;height:100dvh;width:270px;max-width:84vw;transform:translateX(-105%);transition:transform .22s ease;box-shadow:12px 0 35px #102b2420;padding-top:22px}body.sidebar-open nav{transform:translateX(0)}.sidebar-backdrop{position:fixed;inset:0;background:#061b1390;z-index:19}.sidebar-backdrop.show{display:block}}
+
+.draw-overlay{position:fixed;inset:0;background:#071b14d9;z-index:60;display:none;align-items:center;justify-content:center;padding:14px}.draw-overlay.open{display:flex}.draw-panel{width:min(900px,100%);max-height:92vh;overflow:auto;background:#f7faf8;border-radius:20px;padding:clamp(16px,3vw,28px);box-shadow:0 25px 80px #0005}.draw-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}.draw-kicker{font-size:10px;font-weight:900;letter-spacing:2px;color:var(--green)}.draw-heading h2{margin:3px 0;font-size:25px}.draw-heading p{margin:0;color:var(--muted);font-size:13px}.draw-ball{width:54px;height:54px;border-radius:17px;background:#e4f3eb;display:grid;place-items:center;font-size:28px;flex:none}.draw-groups{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.draw-group{background:#fff;border:1px solid var(--line);border-radius:13px;overflow:hidden;min-width:0}.draw-group h3{margin:0;padding:9px 11px;background:#e8f2ec;color:var(--green);font-size:14px}.draw-slot{min-height:43px;padding:9px 10px;border-top:1px solid #edf1ee;font-size:12px;font-weight:700;display:flex;align-items:center;gap:7px;color:#a2aca6}.draw-slot.revealed{color:var(--ink);animation:revealTeam .35s ease both}.draw-slot .slot-num{font-size:10px;color:#9aa79f;width:15px;flex:none}.draw-slot.revealed .slot-num{color:var(--green)}.draw-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px}.draw-actions .muted{font-size:12px}@keyframes revealTeam{from{opacity:0;transform:translateY(9px);background:#e4f3eb}to{opacity:1;transform:translateY(0);background:#fff}}@media(max-width:650px){.draw-groups{grid-template-columns:repeat(2,minmax(0,1fr))}.draw-heading h2{font-size:21px}.draw-actions{align-items:flex-start;flex-direction:column}.draw-actions .actions{width:100%}.draw-actions button{flex:1}}
+
+/* Season podium reveal */
+.podium-overlay{position:fixed;inset:0;background:rgba(5,20,14,.82);backdrop-filter:blur(7px);display:none;align-items:center;justify-content:center;padding:18px;z-index:120;}
+.podium-overlay.open{display:flex;}
+.podium-panel{width:min(620px,100%);background:linear-gradient(155deg,#102c20,#071a12);border:1px solid #ffffff25;border-radius:24px;padding:clamp(20px,4vw,34px);color:#fff;box-shadow:0 28px 90px #0008;overflow:hidden;position:relative;}
+.podium-panel:before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;background:#d7b45a18;filter:blur(8px);top:-150px;right:-90px;pointer-events:none;}
+.podium-kicker{font-size:10px;letter-spacing:2.5px;color:#d9bd70;font-weight:900;}
+.podium-title{font-size:clamp(23px,5vw,34px);margin:7px 0 4px;font-weight:900;}
+.podium-subtitle{color:#b7c8bd;font-size:13px;margin:0 0 22px;}
+.podium-reveal{min-height:230px;display:grid;place-items:center;text-align:center;}
+.podium-reveal-card{width:min(360px,100%);padding:24px 18px;border:1px solid #d9bd7055;border-radius:20px;background:linear-gradient(145deg,#ffffff16,#ffffff08);animation:podiumPop .65s cubic-bezier(.2,.85,.25,1) both;}
+.podium-medal{font-size:42px;line-height:1.2;margin-bottom:10px;filter:drop-shadow(0 5px 12px #0006);}
+.podium-place{font-size:11px;letter-spacing:2px;color:#d9bd70;font-weight:900;text-transform:uppercase;}
+.podium-team{font-size:clamp(21px,5vw,30px);font-weight:900;margin:8px 0;overflow-wrap:anywhere;}
+.podium-points{font-size:13px;color:#c6d2ca;}
+.podium-final{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;align-items:end;margin:20px 0 8px;}
+.podium-place-card{min-width:0;text-align:center;padding:14px 7px 12px;border-radius:13px;background:#ffffff10;border:1px solid #ffffff20;animation:podiumRise .6s cubic-bezier(.2,.8,.2,1) both;}
+.podium-place-card:nth-child(1){animation-delay:.05s}.podium-place-card:nth-child(2){animation-delay:.16s}.podium-place-card:nth-child(3){animation-delay:.27s}.podium-place-card:nth-child(4){animation-delay:.38s}
+.podium-place-card.first{background:linear-gradient(160deg,#d9bd7040,#ffffff10);border-color:#d9bd70a8;padding-top:22px;padding-bottom:20px;}
+.podium-place-card .medal{font-size:25px;}.podium-place-card .place-num{font-size:10px;letter-spacing:1px;color:#d9bd70;font-weight:900;margin:6px 0;}.podium-place-card .place-team{font-size:12px;font-weight:800;line-height:1.35;overflow-wrap:anywhere;}.podium-place-card .place-pts{font-size:10px;color:#b7c8bd;margin-top:5px;}
+.podium-actions{display:flex;justify-content:flex-end;margin-top:18px;}
+.podium-actions button{background:#d9bd70;color:#142319;border:0;border-radius:11px;padding:11px 18px;font-weight:900;cursor:pointer;}
+@keyframes podiumPop{0%{opacity:0;transform:translateY(28px) scale(.82)}65%{opacity:1;transform:translateY(-5px) scale(1.025)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes podiumRise{0%{opacity:0;transform:translateY(22px)}100%{opacity:1;transform:translateY(0)}}
+@media(max-width:480px){.podium-final{gap:5px}.podium-place-card{padding:11px 4px 9px}.podium-place-card.first{padding-top:17px;padding-bottom:16px}.podium-place-card .place-team{font-size:10px}.podium-place-card .medal{font-size:21px}}
+@media(prefers-reduced-motion:reduce){.podium-reveal-card,.podium-place-card{animation:none}}
+
+/* Mobile input safety: keep team names horizontal and prevent flex/grid shrinkage. */
+#teamModal .modalbox{min-width:0;width:min(440px,calc(100vw - 32px));}
+#teamModal .field,#teamModal .field input{min-width:0;max-width:100%;}
+#teamModal input:not([type="hidden"]){display:block;width:100%;min-width:0;writing-mode:horizontal-tb;text-orientation:mixed;white-space:normal;overflow-wrap:normal;word-break:normal;}
+@media(max-width:380px){#teamModal .modalbox{padding:16px;}#teamModal .actions{gap:6px;}#teamModal .actions button{padding:10px 12px;}}
+</style></head>
+<body>
+<header><div class="brand"><button class="menu-toggle" aria-label="Open menu" onclick="toggleSidebar()">☰</button><div class="ball">⚽</div><div><h1>GAME CREATOR</h1><small>TOURNAMENT MANAGER</small></div></div><div class="headerline"><h2 id="topTitle">Dashboard</h2><span class="season" id="seasonTag">YOUR FOOTBALL WORLD</span></div></header>
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar(false)"></div>
+<div class="app-shell">
+<nav id="sidebar"></nav>
+<div class="main-wrap"><main>
+<section class="page active" id="dashboard">
+<div class="grid">
+<div class="stat"><small>TEAMS IN DATABASE</small><strong id="statTeams">0</strong></div>
+<div class="stat"><small>SAVED COMPETITIONS</small><strong id="statLeague">—</strong></div>
+<div class="stat"><small>PLAYED</small><strong id="statPlayed">0 / 380</strong></div>
+<div class="stat"><small>REMAINING</small><strong id="statRemaining">380</strong></div>
+</div>
+<div class="sectionhead"><h3>Competition Hub</h3><span class="pill">League + Cup</span></div>
+<div class="card"><h3 style="margin:0 0 6px">Your football tournament, your rules.</h3><p class="muted" style="margin:0 0 15px">Build your team library, create custom leagues or cup tournaments, generate fixtures and track every result.</p><div class="actions"><button class="btn" onclick="go('teams')">Manage Teams</button><button class="btn secondary" onclick="go('league')">Set Up League</button></div></div>
+<div class="sectionhead"><h3>Quick guide</h3></div>
+<div class="card"><p>① Add at least 20 teams in <b>Teams</b>.</p><p>② Create a league or cup in the corresponding menu.</p><p>③ Enter scores and follow fixtures, standings and knockout progress.</p><p style="margin-bottom:0">④ Back up your data regularly using Export Backup.</p></div>
+<div class="notice">Prototype storage: data is saved in this browser on this device. Export a backup before clearing browser data or changing phones.</div>
+</section>
+<section class="page" id="teams">
+<div class="sectionhead"><h3>Team Database <span class="pill" id="teamCount">0 teams</span></h3><button class="btn" onclick="openTeam()">＋ Add Team</button></div>
+<div class="row between"><input id="teamSearch" placeholder="Search teams..." oninput="renderTeams()" style="max-width:260px;border:1px solid var(--line);border-radius:9px;padding:10px"><div class="actions"><button class="btn secondary" onclick="exportBackup()">Export Backup</button><button class="btn secondary" onclick="document.getElementById('importFile').click()">Import Backup</button></div></div>
+<div class="sectionhead"><h3>Active Teams</h3><span class="pill">Grouped by country</span></div><div class="active-country-list" id="activeTeams"></div>
+<div class="sectionhead"><h3>Archived Teams</h3><span class="pill">Not selectable for new competitions</span></div><div class="teamlist" id="archivedTeams"></div>
+</section>
+<section class="page" id="series">
+<div class="sectionhead"><h3>All Series</h3><button class="btn" onclick="createSeries()">＋ Create Series</button></div>
+<div class="notice">A Series is a separate football universe. View Team Records for this Series here, or use the Overall Team Records section to compare performance across all Series.</div>
+<div id="seriesList" class="teamlist"></div>
+</section>
+<section class="page" id="seriesDetail">
+<div class="sectionhead"><div><div class="muted" style="font-size:12px">SERIES OVERVIEW</div><h3 id="seriesDetailTitle">Series</h3></div><div class="actions"><button class="btn secondary" onclick="go('series')">← All Series</button><button class="btn" onclick="startCreateLeague()">＋ Create Match</button></div></div>
+<div class="grid" style="grid-template-columns:repeat(3,1fr)"><div class="stat"><small>COMPETITIONS</small><strong id="seriesLeagueCount">0</strong></div><div class="stat"><small>COMPLETED</small><strong id="seriesCompletedCount">0</strong></div><div class="stat"><small>TEAMS USED</small><strong id="seriesTeamsCount">0</strong></div></div>
+<div class="sectionhead"><h3>Competitions in this Series</h3><button class="btn secondary" onclick="startCreateLeague()">＋ Create Match</button></div>
+<div id="seriesLeagueList" class="teamlist"></div>
+<div class="sectionhead"><h3>Series History</h3><button class="btn secondary" onclick="openTeamRecords('series')">◷　Team Records</button></div>
+</section>
+<section class="page" id="leagueDetail">
+<div class="sectionhead"><div><div class="muted" style="font-size:12px" id="leagueDetailSeries">SERIES</div><h3 id="leagueDetailTitle">League</h3></div><button class="btn secondary" onclick="go('seriesDetail')">← Back to Series</button></div>
+<div class="card"><div class="grid" style="grid-template-columns:repeat(3,1fr)"><div><small class="muted">SEASON</small><div id="leagueDetailSeason"><b>—</b></div></div><div><small class="muted">TEAMS</small><div id="leagueDetailTeams"><b>—</b></div></div><div><small class="muted">PROGRESS</small><div id="leagueDetailProgress"><b>—</b></div></div></div></div>
+<div class="sectionhead"><h3>League Menu</h3></div>
+<div class="teamlist"><div class="card"><h3>⚽ Fixtures & Results</h3><p class="muted">View fixtures, enter match scores and track completed matches.</p><button class="btn" onclick="go('fixtures')">Open Fixtures & Results</button></div><div class="card"><h3>▥ Standing</h3><p class="muted">View the current league table, points and team form.</p><button class="btn" onclick="go('table')">Open Standing</button></div></div>
+</section>
+<section class="page" id="leagues">
+<div class="sectionhead"><h3>Competition Management</h3><button class="btn" onclick="go('league')">＋ Create Match</button></div>
+<div class="notice">Each league is saved separately. Switching leagues will not overwrite its fixtures or results.</div>
+<div id="leagueList" class="teamlist"></div>
+</section>
+<section class="page" id="league">
+<div class="sectionhead"><h3>Create Match</h3><span class="pill">Series Competition</span></div>
+<div class="card">
+<div class="field"><label>COMPETITION TYPE</label><select id="competitionType" onchange="updateCompetitionType()"><option value="league" selected>League</option><option value="cup">Cup</option></select></div>
+<div class="field"><label>NAME</label><input id="leagueName" placeholder="e.g. My Premier League"></div>
+<div class="field"><label>SERIES</label><select id="leagueSeries"></select></div>
+<div class="field"><label>SEASON</label><input id="leagueSeason" placeholder="e.g. 2026/27"></div>
+<div id="leagueSettings" class="league-settings">
+ <div class="formrow"><div class="field"><label>NUMBER OF TEAMS</label><input id="teamLimit" type="number" min="2" max="100" value="10" oninput="updateTeamLimit()"></div><div class="field"><label>LEAGUE FORMAT</label><select id="leagueFormat" onchange="updateTeamLimit()"><option value="double">Double round-robin</option><option value="single">Single round-robin</option></select></div></div>
+ <div class="field"><label>FIXTURE ORDER</label><select id="leagueOrder"><option value="random" selected>Randomized draw (recommended)</option><option value="standard">Standard order</option></select><small class="muted">Randomized draw changes the team pairing pattern for each new season.</small></div>
+ <div class="row between"><b>Select teams</b><span class="pill" id="selectedCount">0 / 10 selected</span></div>
+ <div class="notice">Choose the number of teams. Fixtures and total matches are calculated automatically.</div>
+ <div id="teamPicker" class="teamlist"></div>
+</div>
+<div id="cupSettings" class="cup-settings" style="display:none">
+ <div class="formrow"><div class="field"><label>NUMBER OF TEAMS</label><input id="cupTeamCount" type="number" min="4" max="64" value="16" oninput="updateCupPicker()"></div><div class="field"><label>NUMBER OF GROUPS</label><input id="cupGroupCount" type="number" min="2" max="16" value="4" oninput="updateCupPicker()"></div></div>
+ <div class="formrow"><div class="field"><label>GROUP MATCH FORMAT</label><select id="cupGroupFormat"><option value="single">Single round-robin</option><option value="double">Double round-robin</option></select></div><div class="field"><label>TEAMS QUALIFYING PER GROUP</label><input id="cupQualify" type="number" min="1" max="4" value="2" oninput="updateCupPicker()"></div></div>
+ <div class="field"><label>KNOCKOUT DRAW METHOD</label><select id="cupDraw"><option value="standard">Standard Draw (e.g. A1 vs B2)</option><option value="random">Random Draw (redraw all qualified teams)</option></select></div>
+ <div class="field"><label><input type="checkbox" id="cupThirdPlace" checked> Include third-place match</label></div>
+ <div class="row between"><b>Select teams</b><span class="pill" id="cupSelectedCount">0 / 16 selected</span></div>
+ <div class="notice">The number of qualified teams must be 4, 8, 16 or 32 so a knockout bracket can be generated evenly.</div>
+ <div id="cupTeamPicker" class="teamlist"></div>
+</div>
+<button class="btn" style="width:100%;margin-top:15px" id="createLeague" onclick="createLeague()">Generate League Fixtures</button>
+<button class="btn" id="createCupBtn" style="width:100%;margin-top:15px;display:none" onclick="createCup()">Create Cup & Generate Groups</button>
+</div>
+</section>
+<section class="page" id="cups">
+<div class="sectionhead"><h3>Cup Management</h3><button class="btn" onclick="go('cup')">＋ Create Match</button></div>
+<div class="notice">Each cup is saved independently with its own groups, fixtures, results and knockout bracket.</div><div id="cupList" class="teamlist"></div>
+</section>
+<section class="page" id="cupstage"><div class="sectionhead"><h3 id="cupStageTitle">Cup Stage</h3><span class="pill" id="cupStageStatus">No active cup</span></div><div class="actions" style="margin-bottom:12px"><button class="btn secondary" onclick="renderCupStage('groups')">Group Stage</button><button class="btn secondary" onclick="renderCupStage('knockout')">Knockout Stage</button><button class="btn" onclick="generateKnockout()">Generate / Refresh Knockout</button></div><div id="cupStageArea" class="card"><div class="empty">Create or open a cup first.</div></div></section>
+<section class="page" id="records">
+<div class="sectionhead"><div><h3 id="recordHeading">Team Records</h3><div class="muted" id="recordScopeLabel" style="font-size:12px">Overall performance across all Series</div></div><span class="pill" id="recordCount">0 seasons</span></div>
+<div class="card">
+ <div class="field"><label>SELECT TEAM</label><select id="recordTeamSelect" onchange="renderRecords()"><option value="">Select a team</option></select></div>
+ <div class="muted" style="font-size:12px" id="recordHelp">View this team's combined record across all Series.</div>
+</div>
+<div id="teamRecordProfile">
+ <div class="grid record-stats" style="margin-top:14px">
+  <div class="stat"><small>TOTAL WINS</small><strong id="recordWins">—</strong></div>
+  <div class="stat"><small>TOTAL DRAWS</small><strong id="recordDraws">—</strong></div>
+  <div class="stat"><small>TOTAL LOSSES</small><strong id="recordLosses">—</strong></div>
+  <div class="stat"><small>BEST POSITION</small><strong id="recordBest">—</strong></div>
+  <div class="stat"><small>CHAMPIONSHIPS</small><strong id="recordTitles">0 of 0</strong></div>
+ </div>
+ <div class="sectionhead"><h3>Season-by-Season Records</h3></div>
+ <div class="tablewrap"><table style="min-width:760px"><thead><tr><th>SERIES</th><th>COMPETITION</th><th>SEASON</th><th>POS</th><th>MP</th><th>W</th><th>D</th><th>L</th><th>PTS</th><th>STATUS</th></tr></thead><tbody id="teamRecordDetails"></tbody></table></div>
+</div>
+</section>
+<section class="page" id="fixtures">
+<div class="sectionhead"><h3>Fixtures & Results</h3><span class="pill" id="fixtureProgress">No league</span></div>
+<div id="fixtureArea" class="card"><div class="empty">Create a league first to generate fixtures.</div></div>
+</section>
+<section class="page" id="table">
+<div class="sectionhead"><h3>Standing</h3><span class="pill" id="tableSeason">No active league</span></div>
+<div class="card" style="padding:0;overflow:hidden"><div class="tablewrap" style="border:0;border-radius:0"><table><thead><tr><th>POS</th><th>CLUB</th><th>MP</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>PTS</th><th>LAST 5</th></tr></thead><tbody id="standingsBody"><tr><td colspan="11" class="empty">No active league yet.</td></tr></tbody></table></div></div>
+<div class="footer">Ranking: Points → Goal Difference → Goals For → Head-to-Head points / GD / Goals For.</div>
+</section>
+<div class="footer">GAME CREATOR · PRIVATE BUILD 0.17 · PWA READY</div>
+</main></div></div>
+<div class="podium-overlay" id="podiumOverlay" aria-hidden="true"><div class="podium-panel" role="dialog" aria-modal="true" aria-labelledby="podiumTitle"><div class="podium-kicker">FULL-TIME · SEASON COMPLETE</div><h2 class="podium-title" id="podiumTitle">The Final Standings</h2><p class="podium-subtitle" id="podiumSubtitle"></p><div class="podium-reveal" id="podiumReveal"></div><div class="podium-final hidden" id="podiumFinal"></div><div class="podium-actions"><button type="button" id="podiumClose" onclick="closePodium()" class="hidden">Continue</button></div></div></div>
+<div class="modal" id="teamModal"><div class="modalbox"><h3 id="teamModalTitle">Add Team</h3><input type="hidden" id="editTeamId"><div class="field"><label>TEAM NAME</label><input id="newTeamName" placeholder="e.g. Johor Darul Ta'zim"></div><div class="field"><label>SHORT NAME (OPTIONAL)</label><input id="newTeamShort" maxlength="4" placeholder="e.g. JDT"></div><div class="field"><label>COUNTRY / REGION (OPTIONAL)</label><input id="newTeamCountry" placeholder="e.g. Malaysia"></div><div class="actions" style="justify-content:flex-end;margin-top:15px"><button class="btn secondary" onclick="closeTeam()">Cancel</button><button class="btn" onclick="saveTeam()">Save Team</button></div></div></div>
+<div class="draw-overlay" id="drawOverlay" aria-hidden="true"><div class="draw-panel"><div class="draw-heading"><div><span class="draw-kicker">CUP GROUP DRAW</span><h2 id="drawTitle">Group Draw</h2><p id="drawProgress">Preparing the draw...</p></div><div class="draw-ball">⚽</div></div><div class="draw-groups" id="drawGroups"></div><div class="draw-actions"><span class="muted" id="drawHint">Teams are already randomly assigned.</span><div class="actions"><button class="btn secondary" id="skipDrawBtn" onclick="skipDraw()">Skip Animation</button><button class="btn hidden" id="closeDrawBtn" onclick="closeDraw()">View Groups</button></div></div></div></div>
+<input type="file" id="importFile" accept="application/json" class="hidden" onchange="importBackup(event)">
+<script>
+const KEY='gameCreator_v01';
+let state=load();
+function uid(){return 't'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function shuffleArray(items){const a=[...items];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function load(){
+ try{
+  let x=JSON.parse(localStorage.getItem(KEY))||{teams:[],league:null};
+  if(!Array.isArray(x.teams))x.teams=[];
+  if(!Array.isArray(x.cups))x.cups=[];
+  if(!Array.isArray(x.series))x.series=[{id:'series_default',name:'My Football World',createdAt:new Date().toISOString()}];
+  if(!x.series.length)x.series=[{id:'series_default',name:'My Football World',createdAt:new Date().toISOString()}];
+  if(!Array.isArray(x.leagues))x.leagues=x.league?[x.league]:[];
+  x.leagues=x.leagues.map((l,i)=>({...l,id:l.id||('league_'+i+'_'+Date.now()),seriesId:l.seriesId||x.series[0].id,status:l.status||'saved'}));
+  let active=x.leagues.find(l=>l.id===x.activeLeagueId)||x.leagues.find(l=>l.id===x.league?.id)||x.leagues[0]||null;
+  x.activeLeagueId=active?.id||null;x.league=active;x.leagues.forEach(l=>{if(!l.seriesId)l.seriesId=x.series[0].id});x.activeSeriesId=x.activeSeriesId||active?.seriesId||x.series[0].id;
+  x.cups=x.cups.map(c=>({...c,seriesId:(c.seriesId&&x.series.some(s=>s.id===c.seriesId))?c.seriesId:(x.activeSeriesId||x.series[0].id)}));
+  return x;
+ }catch(e){return {teams:[],cups:[],series:[{id:'series_default',name:'My Football World'}],activeSeriesId:'series_default',leagues:[],activeLeagueId:null,league:null}}
+}
+function save(){
+ if(!Array.isArray(state.leagues))state.leagues=[];
+ if(state.league){let i=state.leagues.findIndex(l=>l.id===state.league.id);if(i<0)state.leagues.push(state.league);else state.leagues[i]=state.league;state.activeLeagueId=state.league.id;}
+ localStorage.setItem(KEY,JSON.stringify(state));render()
+}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function toggleSidebar(force){const open=typeof force==='boolean'?force:!document.body.classList.contains('sidebar-open');document.body.classList.toggle('sidebar-open',open);document.getElementById('sidebarBackdrop')?.classList.toggle('show',open)}
+function renderSidebar(){const nav=document.getElementById('sidebar');if(!nav)return;const activeSeries=state.series.find(x=>x.id===state.activeSeriesId)||state.series[0];let html='<div class="nav-label">MAIN</div><button data-page="dashboard">⌂　Dashboard</button><div class="nav-label">DATABASE</div><button data-page="teams">♟　Teams</button><button data-page="series">▦　All Series</button><div class="nav-label">SERIES</div>';
+ state.series.forEach(s=>{const expanded=s.id===activeSeries?.id;html+=`<button class="${expanded?'active':''}" onclick="openSeries('${s.id}')">▸　${esc(s.name)}</button>`;if(expanded){html+='<div style="padding-left:13px;border-left:2px solid var(--line);margin:0 0 5px 13px"><button data-page="seriesDetail">⌂　Overview</button><button onclick="startCreateLeague()">＋　Create Match</button>';state.leagues.filter(l=>l.seriesId===s.id&&l.status!=='archived').forEach(l=>{const selected=l.id===state.activeLeagueId;html+=`<button class="${selected?'active':''}" onclick="openLeagueDetail('${l.id}')">▤　${esc(l.name)}</button>`;if(selected)html+=`<div style="padding-left:12px"><button data-page="fixtures">⚽　Fixtures & Results</button><button data-page="table">▥　Standing</button></div>`});html+=`<button data-page="cups">🏆　Cup Management</button><button onclick="startCreateLeague('cup')">＋　Create Cup</button>`;state.cups.filter(c=>c.seriesId===s.id).forEach(c=>{const selected=c.id===activeCupId;html+=`<button class="${selected?'active':''}" onclick="openCup('${c.id}')">🏆　${esc(c.name)}</button>`});html+=`<button onclick="openTeamRecords('series')" class="${currentPage==='records'&&recordScope==='series'?'active':''}">◷　Team Records</button></div>`}});
+ html+=`<div class="nav-label">HISTORY</div><button onclick="openTeamRecords('overall')" class="${currentPage==='records'&&recordScope==='overall'?'active':''}">◷　Team Records</button>`;
+ nav.innerHTML=html;nav.querySelectorAll('button[data-page]').forEach(b=>{b.classList.toggle('active',b.dataset.page===currentPage);b.onclick=()=>go(b.dataset.page)});}
+let currentPage='dashboard';
+function go(page){if(page==='cup'){startCreateLeague('cup');return;}currentPage=page;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===page));document.getElementById('topTitle').textContent=({dashboard:'Dashboard',teams:'Teams',series:'Series',seriesDetail:state.series.find(x=>x.id===state.activeSeriesId)?.name||'Series Overview',leagueDetail:state.league?.name||'League',leagues:'Competition Management',league:'Create Match',fixtures:'Fixtures & Results',table:'Standing',records:'Team Records',cups:'Cup Management',cup:'Create Match',cupstage:'Cup Stage'})[page]||page;toggleSidebar(false);renderSidebar();render()}
+function openTeam(id=''){let t=state.teams.find(x=>x.id===id);document.getElementById('editTeamId').value=id;document.getElementById('newTeamName').value=t?.name||'';document.getElementById('newTeamShort').value=t?.short||'';document.getElementById('newTeamCountry').value=t?.country||'';document.getElementById('teamModalTitle').textContent=id?'Edit Team':'Add Team';document.getElementById('teamModal').classList.add('open')}
+function closeTeam(){document.getElementById('teamModal').classList.remove('open')}
+function saveTeam(){let id=document.getElementById('editTeamId').value,name=document.getElementById('newTeamName').value.trim();if(!name)return alert('Please enter a team name.');if(state.teams.some(t=>t.name.toLowerCase()===name.toLowerCase()&&t.id!==id))return alert('This team already exists.');let obj={id:id||uid(),name,short:document.getElementById('newTeamShort').value.trim().toUpperCase(),country:document.getElementById('newTeamCountry').value.trim(),archived:false};if(id){let old=state.teams.find(t=>t.id===id);obj.archived=old.archived;Object.assign(old,obj)}else state.teams.push(obj);closeTeam();save()}
+function archiveTeam(id){let t=state.teams.find(x=>x.id===id);if(!t)return;if(!confirm(`Archive ${t.name}? Existing league records will be kept.`))return;t.archived=true;save()}
+function restoreTeam(id){let t=state.teams.find(x=>x.id===id);if(t){t.archived=false;save()}}
+function renderTeams(){
+ let q=(document.getElementById('teamSearch')?.value||'').trim().toLowerCase();
+ let active=state.teams.filter(t=>!t.archived&&(`${t.name||''} ${t.country||''}`).toLowerCase().includes(q));
+ let arch=state.teams.filter(t=>t.archived&&(`${t.name||''} ${t.country||''}`).toLowerCase().includes(q));
+ document.getElementById('teamCount').textContent=state.teams.filter(t=>!t.archived).length+' active';
+ const groups={};
+ active.forEach(t=>{const country=(t.country||'').trim()||'Other / Not specified';(groups[country] ||= []).push(t)});
+ const countries=Object.keys(groups).sort((a,b)=>{if(a==='Other / Not specified')return 1;if(b==='Other / Not specified')return -1;return a.localeCompare(b)});
+ document.getElementById('activeTeams').innerHTML=countries.map(country=>{
+  const teams=groups[country].sort((a,b)=>(a.name||'').localeCompare(b.name||''));
+  return `<section class="country-group"><h4 class="country-heading">${esc(country)}<small>${teams.length} ${teams.length===1?'team':'teams'}</small></h4><div class="country-teams">${teams.map(t=>teamCard(t,false)).join('')}</div></section>`;
+ }).join('')||'<div class="empty">No active teams yet. Add your first team.</div>';
+ document.getElementById('archivedTeams').innerHTML=arch.map(t=>teamCard(t,true)).join('')||'<div class="empty">No archived teams.</div>';
+}
+function teamCard(t,arch){return `<div class="team"><div class="crest">${esc((t.short||t.name.slice(0,2)).slice(0,3))}</div><div class="name">${esc(t.name)}<small>${esc(t.country||'')}${arch?' · Archived':''}</small></div>${arch?`<button class="btn secondary" onclick="restoreTeam('${t.id}')">Restore</button>`:`<button class="btn secondary" onclick="openTeam('${t.id}')">Edit</button><button class="btn danger" onclick="archiveTeam('${t.id}')">Archive</button>`}</div>`}
+let selected=new Set();
+function teamLimit(){return Math.max(2,Math.min(100,parseInt(document.getElementById('teamLimit')?.value||'10',10)||10))}
+function updateTeamLimit(){const max=teamLimit();while(selected.size>max)selected.delete([...selected].at(-1));renderPicker()}
+function renderPicker(){let box=document.getElementById('teamPicker');let active=state.teams.filter(t=>!t.archived);const max=teamLimit();box.innerHTML=active.map(t=>`<label class="team" style="cursor:pointer"><input type="checkbox" value="${t.id}" ${selected.has(t.id)?'checked':''} onchange="togglePick('${t.id}',this.checked)" ${selected.size>=max&&!selected.has(t.id)?'disabled':''}><div class="crest">${esc((t.short||t.name.slice(0,2)).slice(0,3))}</div><div class="name">${esc(t.name)}<small>${esc(t.country||'')}</small></div></label>`).join('')||'<div class="empty">Add teams in the Teams section first.</div>';document.getElementById('selectedCount').textContent=selected.size+' / '+max+' selected';document.getElementById('createLeague').disabled=selected.size!==max}
+function togglePick(id,on){if(on&&selected.size<teamLimit())selected.add(id);else selected.delete(id);renderPicker()}
+function updateCompetitionType(){const type=document.getElementById('competitionType')?.value||'league';document.getElementById('leagueSettings').style.display=type==='league'?'block':'none';document.getElementById('cupSettings').style.display=type==='cup'?'block':'none';document.getElementById('createLeague').style.display=type==='league'?'block':'none';document.getElementById('createCupBtn').style.display=type==='cup'?'block':'none';document.getElementById('leagueName').placeholder=type==='cup'?'e.g. World Cup':'e.g. My Premier League';if(type==='cup')updateCupPicker();else renderPicker()}
+function createLeague(){
+ const max=teamLimit();if(selected.size!==max)return;
+ let name=document.getElementById('leagueName').value.trim()||'My League',season=document.getElementById('leagueSeason').value.trim()||'Season 1';
+ const seriesId=document.getElementById('leagueSeries').value||state.activeSeriesId||state.series[0]?.id;
+ if(!seriesId)return alert('Create a Series first.');
+ if(state.leagues.some(l=>l.seriesId===seriesId&&l.name.toLowerCase()===name.toLowerCase()&&l.season.toLowerCase()===season.toLowerCase())&&!confirm('A competition with this name and season already exists in this Series. Create another copy?'))return;
+ let teams=[...selected].map(id=>state.teams.find(t=>t.id===id)).filter(Boolean);
+ const fixtureOrder=document.getElementById('leagueOrder')?.value||'random';
+ if(fixtureOrder==='random')teams=shuffleArray(teams);
+ let format=document.getElementById('leagueFormat').value;
+ let rounds=generateRounds(teams,format==='double');
+ let league={id:uid(),seriesId,name,season,format,fixtureOrder,teamIds:teams.map(t=>t.id),teams:teams.map(t=>({id:t.id,name:t.name,short:t.short})),rounds,createdAt:new Date().toISOString(),status:'saved'};
+ state.leagues.push(league);state.league=league;state.activeLeagueId=league.id;state.activeSeriesId=seriesId;selected.clear();
+ document.getElementById('leagueName').value='';document.getElementById('leagueSeason').value='';save();go('leagueDetail');
+}
+function activateLeague(id){let l=state.leagues.find(x=>x.id===id);if(!l)return;l.status='saved';state.league=l;state.activeLeagueId=id;state.activeSeriesId=l.seriesId||state.activeSeriesId;currentRound=1;save();go('leagueDetail')}
+function archiveLeague(id){let l=state.leagues.find(x=>x.id===id);if(!l)return;if(!confirm(`Archive ${l.name} · ${l.season}? Its records will remain available.`))return;l.status='archived';if(state.league?.id===id){let next=state.leagues.find(x=>x.id!==id&&x.seriesId===l.seriesId&&x.status!=='archived');state.league=next||null;state.activeLeagueId=next?.id||null;}save()}
+function restoreLeague(id){let l=state.leagues.find(x=>x.id===id);if(!l)return;l.status='saved';save()}
+let cupSelected=new Set(),activeCupId=null,cupView='groups';
+function updateCupPicker(){const n=Math.max(4,Math.min(64,+document.getElementById('cupTeamCount').value||16)),g=Math.max(2,Math.min(16,+document.getElementById('cupGroupCount').value||4)),q=Math.max(1,Math.min(4,+document.getElementById('cupQualify').value||2));document.getElementById('cupTeamCount').value=n;document.getElementById('cupGroupCount').value=g;document.getElementById('cupQualify').value=q;while(cupSelected.size>n)cupSelected.delete([...cupSelected].at(-1));const total=g*q,valid=[4,8,16,32].includes(total)&&n>=g&&n%g===0;document.getElementById('cupSelectedCount').textContent=cupSelected.size+' / '+n+' selected · '+total+' qualify';const active=state.teams.filter(t=>!t.archived);document.getElementById('cupTeamPicker').innerHTML=active.map(t=>`<label class="team" style="cursor:pointer"><input type="checkbox" value="${t.id}" ${cupSelected.has(t.id)?'checked':''} onchange="toggleCupPick('${t.id}',this.checked)" ${cupSelected.size>=n&&!cupSelected.has(t.id)?'disabled':''}><div class="crest">${esc((t.short||t.name.slice(0,2)).slice(0,3))}</div><div class="name">${esc(t.name)}<small>${esc(t.country||'')}</small></div></label>`).join('')||'<div class="empty">Add teams first.</div>';document.getElementById('createCupBtn').disabled=cupSelected.size!==n||!valid;}
+function toggleCupPick(id,on){if(on&&cupSelected.size<+document.getElementById('cupTeamCount').value)cupSelected.add(id);else cupSelected.delete(id);updateCupPicker()}
+function createCup(){
+ const n=+document.getElementById('cupTeamCount').value,g=+document.getElementById('cupGroupCount').value,q=+document.getElementById('cupQualify').value,total=g*q;
+ if(cupSelected.size!==n||n%g||![4,8,16,32].includes(total))return alert('Please check the team count, group count and qualifying total.');
+ const requestedSeries=document.getElementById('leagueSeries').value;const seriesId=(state.series.some(x=>x.id===requestedSeries)?requestedSeries:null)||state.activeSeriesId||state.series[0]?.id;if(!seriesId||!state.series.some(x=>x.id===seriesId))return alert('Create a Series first.');
+ if(state.cups.some(c=>c.seriesId===seriesId&&c.name.toLowerCase()===(document.getElementById('leagueName').value.trim()||'My Cup').toLowerCase()&&c.season.toLowerCase()===(document.getElementById('leagueSeason').value.trim()||'Season 1').toLowerCase())&&!confirm('A cup with this name and season already exists in this Series. Create another copy?'))return;
+ const teams=[...cupSelected].map(id=>state.teams.find(t=>t.id===id)).filter(Boolean).map(t=>({id:t.id,name:t.name,short:t.short}));
+ const shuffled=shuffleArray(teams),groups=Array.from({length:g},(_,i)=>({name:String.fromCharCode(65+i),teamIds:[],rounds:[]}));
+ shuffled.forEach((t,i)=>groups[i%g].teamIds.push(t.id));
+ groups.forEach(gr=>{const gt=gr.teamIds.map(id=>teams.find(t=>t.id===id));gr.rounds=generateRounds(gt,document.getElementById('cupGroupFormat').value==='double')});
+ const cup={id:uid(),seriesId,name:document.getElementById('leagueName').value.trim()||'My Cup',season:document.getElementById('leagueSeason').value.trim()||'Season 1',teams,groups,qualifyPerGroup:q,drawMethod:document.getElementById('cupDraw').value,thirdPlace:document.getElementById('cupThirdPlace').checked,knockout:[],champion:null,runnerUp:null,createdAt:new Date().toISOString(),status:'saved'};
+ state.cups.push(cup);activeCupId=cup.id;state.activeSeriesId=seriesId;cupSelected.clear();document.getElementById('leagueName').value='';document.getElementById('leagueSeason').value='';save();go('cupstage');renderCupStage('groups');startDrawAnimation(cup);
+}
+let drawTimer=null,drawSequence=[],drawRevealed=0;
+function startDrawAnimation(cup){
+ clearInterval(drawTimer);drawSequence=[];const max=Math.max(...cup.groups.map(g=>g.teamIds.length));
+ for(let slot=0;slot<max;slot++)for(const group of cup.groups){const id=group.teamIds[slot];if(id){const team=cup.teams.find(t=>t.id===id);drawSequence.push({group:group.name,slot,team})}}
+ drawRevealed=0;document.getElementById('drawTitle').textContent=cup.name+' · Group Draw';document.getElementById('drawProgress').textContent=`0 / ${drawSequence.length} teams revealed`;
+ document.getElementById('drawGroups').innerHTML=cup.groups.map(g=>`<div class="draw-group"><h3>GROUP ${esc(g.name)}</h3>${g.teamIds.map((_,i)=>`<div class="draw-slot" id="draw-${cup.id}-${g.name}-${i}"><span class="slot-num">${i+1}</span><span>Waiting for draw…</span></div>`).join('')}</div>`).join('');
+ document.getElementById('skipDrawBtn').classList.remove('hidden');document.getElementById('closeDrawBtn').classList.add('hidden');document.getElementById('drawHint').textContent='The draw is already randomized. Skip will reveal the same groups instantly.';
+ const overlay=document.getElementById('drawOverlay');overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');
+ drawTimer=setInterval(()=>{if(drawRevealed>=drawSequence.length){completeDrawAnimation();return}revealNextDrawTeam(cup);if(drawRevealed>=drawSequence.length)completeDrawAnimation()},520);
+}
+function revealNextDrawTeam(cup){const item=drawSequence[drawRevealed];if(!item)return;const slot=document.getElementById(`draw-${cup.id}-${item.group}-${item.slot}`);if(slot){slot.classList.add('revealed');slot.innerHTML=`<span class="slot-num">${item.slot+1}</span><span>${esc(item.team.name)}</span>`}drawRevealed++;document.getElementById('drawProgress').textContent=`${drawRevealed} / ${drawSequence.length} teams revealed`}
+function completeDrawAnimation(){clearInterval(drawTimer);drawTimer=null;document.getElementById('skipDrawBtn').classList.add('hidden');document.getElementById('closeDrawBtn').classList.remove('hidden');document.getElementById('drawProgress').textContent=`Draw complete · ${drawSequence.length} teams assigned`;document.getElementById('drawHint').textContent='All groups are ready. You can now view the group stage.'}
+function skipDraw(){const cup=getCup();if(!cup)return;while(drawRevealed<drawSequence.length)revealNextDrawTeam(cup);completeDrawAnimation()}
+function closeDraw(){clearInterval(drawTimer);drawTimer=null;const overlay=document.getElementById('drawOverlay');overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true')}
+
+function openCup(id){const c=state.cups.find(x=>x.id===id);if(!c)return;activeCupId=id;state.activeSeriesId=c.seriesId;save();go('cupstage');renderCupStage('groups')}
+function renderCups(){const box=document.getElementById('cupList');if(!box)return;const list=state.cups.filter(c=>!state.activeSeriesId||c.seriesId===state.activeSeriesId);box.innerHTML=list.map(c=>`<div class="card"><div class="row between"><div><b>${esc(c.name)}</b><div class="muted" style="font-size:12px">${esc(state.series.find(s=>s.id===c.seriesId)?.name||'Series')} · ${esc(c.season)} · ${c.teams.length} teams · ${c.groups.length} groups · ${c.status==='completed'?'Completed':'In progress'}</div><span class="pill">${c.champion?'Champion: '+esc(c.champion.name):'CUP'}</span></div><button class="btn" onclick="openCup('${c.id}')">Open Cup</button></div></div>`).join('')||'<div class="empty">No cups saved in this Series yet.</div>'}
+function getCup(){return state.cups.find(c=>c.id===activeCupId)}
+function cupStats(c,group){const l={teams:c.teams.filter(t=>group.teamIds.includes(t.id)),rounds:group.rounds};return standingsFor(l)}
+function cupTeamName(c,id){return c.teams.find(t=>t.id===id)?.name||'TBD'}
+function roundTitle(matchCount){return matchCount===1?'Final':matchCount===2?'Semi-finals':matchCount===4?'Quarter-finals':matchCount===8?'Round of 16':matchCount===16?'Round of 32':'Knockout Round'}
+function renderCupStage(view='groups'){cupView=view;const c=getCup(),area=document.getElementById('cupStageArea');if(!c){area.innerHTML='<div class="empty">Create or open a cup first.</div>';return}document.getElementById('cupStageTitle').textContent=c.name+' · '+c.season;document.getElementById('cupStageStatus').textContent=c.champion?'Completed':c.knockout.length?'Knockout stage':'Group stage';if(view==='groups'){area.innerHTML=c.groups.map(gr=>{const rows=cupStats(c,gr);return `<div class="sectionhead"><h3>Group ${gr.name}</h3><span class="pill">${gr.rounds.flat().filter(m=>m.played).length}/${gr.rounds.flat().length} played</span></div><div class="tablewrap"><table><thead><tr><th>POS</th><th>TEAM</th><th>MP</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>PTS</th></tr></thead><tbody>${rows.map((t,i)=>`<tr><td>${i+1}</td><td>${esc(t.name)}</td><td>${t.mp}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td><td>${t.gd}</td><td><b>${t.pts}</b></td></tr>`).join('')}</tbody></table></div><div class="sectionhead"><h3>Group ${gr.name} Fixtures</h3></div>${gr.rounds.map((round,i)=>`<div class="card" style="margin:8px 0"><b>Round ${i+1}</b>${round.map(m=>cupMatchHtml(c,m,'group',gr.name)).join('')}</div>`).join('')}`}).join('');}else{if(!c.knockout.length){area.innerHTML='<div class="notice">Knockout fixtures have not been generated. Complete all group matches, then select Generate Knockout.</div>';return}area.innerHTML=c.knockout.map((round,i)=>`<div class="sectionhead"><h3>${roundTitle(round.length)}</h3></div><div class="card">${round.map(m=>cupMatchHtml(c,m,'ko',i)).join('')}</div>`).join('')+(c.thirdPlaceMatch?`<div class="sectionhead"><h3>Third-place Match</h3></div><div class="card">${cupMatchHtml(c,c.thirdPlaceMatch,'third',0)}</div>`:'')+(c.champion?`<div class="notice">🏆 Champion: <b>${esc(c.champion.name)}</b> · Runner-up: ${esc(c.runnerUp?.name||'—')}</div>`:'')}}
+function cupMatchHtml(c,m,type,group){const home=cupTeamName(c,m.home),away=cupTeamName(c,m.away);return `<div class="match"><div class="home"><div class="matchname">${esc(home)}</div><div class="status">HOME</div></div><div class="scorebox"><input type="number" min="0" value="${m.homeScore??''}" onchange="cupScore('${c.id}','${m.id}','homeScore',this.value,'${type}','${group}')"><span>:</span><input type="number" min="0" value="${m.awayScore??''}" onchange="cupScore('${c.id}','${m.id}','awayScore',this.value,'${type}','${group}')"></div><div class="away"><div class="matchname">${esc(away)}</div><div class="status">${m.played?'FULL TIME':'AWAY'}</div></div></div>`}
+function cupScore(cid,mid,field,val,type,group){
+ const c=state.cups.find(x=>x.id===cid);if(!c)return;let m;
+ if(type==='group')m=c.groups.find(g=>g.name===group)?.rounds.flat().find(x=>x.id===mid);
+ else if(type==='third')m=c.thirdPlaceMatch;
+ else m=c.knockout.flat().find(x=>x.id===mid);
+ if(!m)return;
+ if(val===''){m[field]=null;m.played=false;m.winner=null;}
+ else{const n=Number(val);if(!Number.isInteger(n)||n<0)return;m[field]=Math.max(0,Math.min(99,n));m.played=m.homeScore!==null&&m.awayScore!==null;}
+ if((type==='ko'||type==='third')&&m.played&&m.homeScore===m.awayScore){m.winner=null;save();renderCupStage('knockout');return alert('Knockout matches cannot end in a draw. Enter the final score after extra time / penalties, or use the winning score.');}
+ if((type==='ko'||type==='third')&&m.played)m.winner=m.homeScore>m.awayScore?m.home:m.away;
+ if(type==='ko')syncKnockoutProgress(c);
+ save();renderCupStage(type==='group'?'groups':'knockout');
+}
+function makeKoMatch(home,away){return {id:uid(),home,away,homeScore:null,awayScore:null,played:false,winner:null}}
+function syncKnockoutProgress(c){
+ if(!Array.isArray(c.knockout))c.knockout=[];
+ if(!c.knockout.length)return;
+ for(let i=0;i<c.knockout.length;i++){
+  const round=c.knockout[i]||[];
+  const complete=round.length>0&&round.every(m=>m.played&&m.winner&&(m.winner===m.home||m.winner===m.away));
+  if(!complete){const hadDownstream=c.knockout.length>i+1;c.knockout=c.knockout.slice(0,i+1);if(hadDownstream||round.length===2)c.thirdPlaceMatch=null;c.champion=null;c.runnerUp=null;c.status='saved';return;}
+  if(round.length===1){
+   const final=round[0];c.champion=c.teams.find(t=>t.id===final.winner)||null;
+   c.runnerUp=c.teams.find(t=>t.id===(final.winner===final.home?final.away:final.home))||null;
+   c.status='completed';c.knockout=c.knockout.slice(0,i+1);return;
+  }
+  if(round.length===2&&c.thirdPlace){
+   const losers=round.map(m=>m.winner===m.home?m.away:m.home);
+   const old=c.thirdPlaceMatch;
+   if(!old||old.home!==losers[0]||old.away!==losers[1])c.thirdPlaceMatch=makeKoMatch(losers[0],losers[1]);
+  }else if(round.length===2&&!c.thirdPlace)c.thirdPlaceMatch=null;
+  const winners=round.map(m=>m.winner),pairs=[];
+  for(let j=0;j<winners.length;j+=2){if(winners[j+1])pairs.push([winners[j],winners[j+1]]);}
+  if(!pairs.length)return;
+  const existing=c.knockout[i+1]||[];
+  const same=existing.length===pairs.length&&pairs.every(([h,a],j)=>existing[j].home===h&&existing[j].away===a);
+  if(!same){c.knockout=c.knockout.slice(0,i+1);c.knockout.push(pairs.map(([h,a])=>makeKoMatch(h,a)));}
+ }
+ c.champion=null;c.runnerUp=null;c.status='saved';
+}
+function generateKnockout(){
+ const c=getCup();if(!c)return;
+ const all=c.groups.flatMap(g=>g.rounds.flat());
+ if(!all.every(m=>m.played))return alert('Complete all group-stage matches before generating the knockout bracket.');
+ if(c.knockout?.length){save();renderCupStage('knockout');return;}
+ const qualified=c.groups.map(g=>cupStats(c,g).slice(0,c.qualifyPerGroup));
+ let teams=qualified.flatMap((rows,i)=>rows.map((t,j)=>({id:t.id,seed:j+1,group:c.groups[i].name})));
+ const total=teams.length;if(![4,8,16,32].includes(total))return alert('Qualified team count must be 4, 8, 16 or 32.');
+ let pairs=[];
+ if(c.drawMethod==='random'){teams=shuffleArray(teams);for(let i=0;i<teams.length;i+=2)pairs.push([teams[i],teams[i+1]]);}
+ else{
+  for(let gi=0;gi<c.groups.length;gi+=2){const ga=qualified[gi]||[],gb=qualified[gi+1]||[];for(let rank=0;rank<Math.max(ga.length,gb.length);rank++){const a=ga[rank],b=gb[gb.length-1-rank];if(a&&b)pairs.push([a,b]);}}
+ }
+ if(pairs.length*2!==total)return alert('The selected group configuration cannot create a complete standard knockout draw. Please use an even number of groups or choose Random Draw.');
+ c.knockout=[pairs.map(([a,b])=>makeKoMatch(a.id,b.id))];c.thirdPlaceMatch=null;c.champion=null;c.runnerUp=null;c.status='saved';
+ syncKnockoutProgress(c);save();renderCupStage('knockout');
+}
+function advanceKnockout(c){syncKnockoutProgress(c)}
+function createSeries(){const name=prompt('Enter Series name (e.g. Europe Series):');if(!name||!name.trim())return;if(state.series.some(x=>x.name.toLowerCase()===name.trim().toLowerCase()))return alert('This Series already exists.');const item={id:uid(),name:name.trim(),createdAt:new Date().toISOString()};state.series.push(item);state.activeSeriesId=item.id;const seriesSelect=document.getElementById('leagueSeries');if(seriesSelect)seriesSelect.value=item.id;save();go('seriesDetail')}
+function activateSeries(id){if(!state.series.some(x=>x.id===id))return;state.activeSeriesId=id;const next=state.leagues.find(l=>l.seriesId===id&&l.status!=='archived');state.league=next||null;state.activeLeagueId=next?.id||null;activeCupId=state.cups.find(c=>c.seriesId===id)?.id||null;save();go('seriesDetail')}
+function openSeries(id){activateSeries(id)}
+function startCreateLeague(type='league'){const sel=document.getElementById('leagueSeries');if(sel)sel.value=state.activeSeriesId||state.series[0]?.id||'';const t=document.getElementById('competitionType');if(t)t.value=type;updateCompetitionType();go('league')}
+function openLeagueDetail(id){activateLeague(id)}
+function renameSeries(id){const item=state.series.find(x=>x.id===id);if(!item)return;const next=prompt('Edit Series name:',item.name);if(next===null)return;const name=next.trim();if(!name)return alert('Series name cannot be empty.');if(state.series.some(x=>x.id!==id&&x.name.toLowerCase()===name.toLowerCase()))return alert('This Series name already exists.');if(name===item.name)return;item.name=name;save()}
+function renderSeries(){const box=document.getElementById('seriesList');if(!box)return;const active=state.activeSeriesId;box.innerHTML=state.series.map(s=>{const comps=[...state.leagues.filter(l=>l.seriesId===s.id).map(l=>({name:l.name,season:l.season,done:isLeagueComplete(l)})),...state.cups.filter(c=>c.seriesId===s.id).map(c=>({name:c.name,season:c.season,done:c.status==='completed'}))];const done=comps.filter(c=>c.done).length;return `<div class="card"><div class="row between"><div><b>${esc(s.name)}</b><div class="muted" style="font-size:12px">${comps.length} competitions · ${done} completed</div><span class="pill">${active===s.id?'CURRENT SERIES':'SERIES'}</span></div><div class="actions"><button class="btn secondary" onclick="renameSeries('${s.id}')">Edit Name</button><button class="btn ${active===s.id?'secondary':''}" onclick="activateSeries('${s.id}')">${active===s.id?'Selected':'Open Series'}</button></div></div><div class="muted" style="font-size:12px;margin-top:10px">${comps.map(c=>esc(c.name)+' · '+esc(c.season)).join('　|　')||'No competitions yet'}</div></div>`}).join('')||'<div class="empty">No Series yet. Create your first Series.</div>';const select=document.getElementById('leagueSeries');if(select){const prev=select.value||active;select.innerHTML=state.series.map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join('');select.value=state.series.some(x=>x.id===prev)?prev:(state.series[0]?.id||'')}}
+function renderSeriesDetail(){const s=state.series.find(x=>x.id===state.activeSeriesId);if(!s)return;const leagues=state.leagues.filter(l=>l.seriesId===s.id&&l.status!=='archived');const cups=state.cups.filter(c=>c.seriesId===s.id);const all=[...leagues.map(l=>({kind:'League',id:l.id,name:l.name,season:l.season,teams:l.teams||[],played:(l.rounds||[]).flat().filter(m=>m.played).length,total:(l.rounds||[]).flat().length,complete:isLeagueComplete(l)})),...cups.map(c=>({kind:'Cup',id:c.id,name:c.name,season:c.season,teams:c.teams||[],played:(c.groups||[]).flatMap(g=>g.rounds||[]).flat().filter(m=>m.played).length+(c.knockout||[]).flat().filter(m=>m.played).length+(c.thirdPlaceMatch?.played?1:0),total:(c.groups||[]).flatMap(g=>g.rounds||[]).flat().length+(c.knockout||[]).flat().length+(c.thirdPlaceMatch?1:0),complete:c.status==='completed'}))];document.getElementById('seriesDetailTitle').textContent=s.name;document.getElementById('seriesLeagueCount').textContent=all.length;document.getElementById('seriesCompletedCount').textContent=all.filter(x=>x.complete).length;document.getElementById('seriesTeamsCount').textContent=new Set(all.flatMap(x=>x.teams.map(t=>t.id))).size;document.getElementById('seriesLeagueList').innerHTML=all.map(x=>`<div class="card"><div class="row between"><div><span class="pill">${x.kind}</span><b style="display:block;margin-top:6px">${esc(x.name)}</b><div class="muted" style="font-size:12px">${esc(x.season||'')} · ${x.teams.length} teams · ${x.played}/${x.total} played</div></div><button class="btn" onclick="${x.kind==='League'?`openLeagueDetail('${x.id}')`:`openCup('${x.id}')`}">Open ${x.kind} →</button></div></div>`).join('')||'<div class="empty">No competitions in this Series yet. Create your first match.</div>'}
+function renderLeagueDetail(){const l=state.league;if(!l)return;const s=state.series.find(x=>x.id===l.seriesId);const matches=(l.rounds||[]).flat();document.getElementById('leagueDetailSeries').textContent=s?.name||'SERIES';document.getElementById('leagueDetailTitle').textContent=l.name;document.getElementById('leagueDetailSeason').textContent=l.season||'—';document.getElementById('leagueDetailTeams').textContent=(l.teams||[]).length;document.getElementById('leagueDetailProgress').textContent=matches.filter(m=>m.played).length+' / '+matches.length+' played'}
+function renderLeagues(){let box=document.getElementById('leagueList');if(!box)return;let list=[...state.leagues].filter(l=>!state.activeSeriesId||l.seriesId===state.activeSeriesId).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));box.innerHTML=list.map(l=>{let played=(l.rounds||[]).flat().filter(m=>m.played).length,total=(l.rounds||[]).flat().length,active=state.league?.id===l.id;return `<div class="card"><div class="row between" style="align-items:flex-start"><div><b>${esc(l.name)}</b><div class="muted" style="font-size:12px">${esc(l.season)} · ${l.teams?.length||0} teams · ${l.rounds?.length||0} rounds · ${played}/${total} played</div><div style="margin-top:7px"><span class="pill">${active?'CURRENT':l.status==='archived'?'ARCHIVED':'SAVED'}</span></div></div><div class="actions">${active?'':`<button class="btn" onclick="activateLeague('${l.id}')">Open</button>`}${l.status==='archived'?`<button class="btn secondary" onclick="restoreLeague('${l.id}')">Restore</button>`:`<button class="btn secondary" onclick="archiveLeague('${l.id}')">Archive</button>`}</div></div></div>`}).join('')||'<div class="empty">No leagues saved yet. Create your first league.</div>'}
+let recordScope='overall';
+function openTeamRecords(scope='overall'){
+ recordScope=scope;
+ go('records');
+}
+function recordPositionDisplay(position){
+ if(position===1)return '<span title="Champion" style="white-space:nowrap"><span style="font-size:20px;vertical-align:middle">🏆</span> <span>#1</span></span>';
+ if(position===2)return '<span title="Runner-up" style="white-space:nowrap"><span style="font-size:18px;vertical-align:middle">🥈</span> <span>#2</span></span>';
+ if(position===3)return '<span title="Third place" style="white-space:nowrap"><span style="font-size:18px;vertical-align:middle">🥉</span> <span>#3</span></span>';
+ return '#'+position;
+}
+function recordPositionLabelDisplay(label,position){
+ if(label==='1st')return recordPositionDisplay(1);
+ if(label==='2nd')return recordPositionDisplay(2);
+ if(label==='3rd')return recordPositionDisplay(3);
+ if(label==='4th')return '#4';
+ return label||recordPositionDisplay(position);
+}
+function renderRecords(){
+ const select=document.getElementById('recordTeamSelect');
+ if(!select)return;
+ const scopedLeagues=state.leagues.filter(l=>recordScope==='series'?l.seriesId===state.activeSeriesId:true);
+ const scopedCups=state.cups.filter(c=>recordScope==='series'?c.seriesId===state.activeSeriesId:true);
+ const activeSeries=state.series.find(x=>x.id===state.activeSeriesId);
+ document.getElementById('recordHeading').textContent=recordScope==='series'?'Team Records · '+(activeSeries?.name||'Series'):'Team Records · Overall';
+ document.getElementById('recordScopeLabel').textContent=recordScope==='series'?'Performance across all competitions in this Series':'Overall performance across all Series';
+ document.getElementById('recordHelp').textContent=recordScope==='series'?'View this team’s combined record across every league, cup and season in this Series.':'View this team’s combined record across all Series, leagues, cups and seasons.';
+ const teamsById={};
+ for(const league of [...scopedLeagues,...scopedCups]){
+  for(const team of (league.teams||[])){
+   if(team?.id&&!teamsById[team.id])teamsById[team.id]={id:team.id,name:team.name||'Unknown Team',short:team.short||''};
+  }
+ }
+ const teams=Object.values(teamsById).sort((a,b)=>a.name.localeCompare(b.name));
+ const previous=select.value;
+ select.innerHTML='<option value="">Select a team</option>'+teams.map(t=>`<option value="${esc(t.id)}">${esc(t.name)}</option>`).join('');
+ const chosen=teams.some(t=>t.id===previous)?previous:(teams[0]?.id||'');
+ select.value=chosen;
+ const rows=[];
+ for(const league of scopedLeagues){
+  const matches=(league.rounds||[]).flat();
+  const completed=matches.length>0&&matches.every(m=>m.played);
+  if(!completed)continue;
+  const ranked=standingsFor(league);
+  ranked.forEach((t,i)=>{if(t.id===chosen)rows.push({...t,position:i+1,positionLabel:null,seriesName:state.series.find(s=>s.id===league.seriesId)?.name||'Unknown Series',leagueName:league.name,season:league.season,createdAt:league.createdAt||'',leagueStatus:league.status==='archived'?'Archived':'Completed'});});
+ }
+ for(const cup of scopedCups){
+  const groupMatches=(cup.groups||[]).flatMap(g=>(g.rounds||[]).flat());
+  const koMatches=(cup.knockout||[]).flat();
+  const matches=[...groupMatches,...koMatches,...(cup.thirdPlaceMatch?[cup.thirdPlaceMatch]:[])];
+  if(!cup.champion||!koMatches.length||!cup.knockout?.[cup.knockout.length-1]?.[0]?.played)continue;
+  const stats=new Map((cup.teams||[]).map(t=>[t.id,{...t,mp:0,w:0,d:0,l:0,gf:0,ga:0,gd:0,pts:0}]));
+  matches.filter(m=>m.played).forEach(m=>{const h=stats.get(m.home),a=stats.get(m.away);if(!h||!a)return;h.mp++;a.mp++;h.gf+=Number(m.homeScore);h.ga+=Number(m.awayScore);a.gf+=Number(m.awayScore);a.ga+=Number(m.homeScore);if(m.homeScore>m.awayScore){h.w++;h.pts+=3;a.l++;}else if(m.homeScore<m.awayScore){a.w++;a.pts+=3;h.l++;}else{h.d++;a.d++;h.pts++;a.pts++;}});
+  stats.forEach(t=>t.gd=t.gf-t.ga);
+  // Cup records show the furthest stage reached, not a league-style numerical ranking.
+  const rank=new Map();
+  if(cup.champion)rank.set(cup.champion.id,{label:'1st',order:1});
+  if(cup.runnerUp)rank.set(cup.runnerUp.id,{label:'2nd',order:2});
+  const semi=(cup.knockout||[]).find(r=>r.length===2);
+  if(semi){
+   const semiLosers=semi.map(m=>m.winner?(m.winner===m.home?m.away:m.home):null).filter(Boolean);
+   if(cup.thirdPlaceMatch?.played&&cup.thirdPlaceMatch.winner){
+    rank.set(cup.thirdPlaceMatch.winner,{label:'3rd',order:3});
+    rank.set(cup.thirdPlaceMatch.winner===cup.thirdPlaceMatch.home?cup.thirdPlaceMatch.away:cup.thirdPlaceMatch.home,{label:'4th',order:4});
+   }else semiLosers.forEach(id=>rank.set(id,{label:'4th',order:4}));
+  }
+  // Earlier-round losers are labelled by the knockout round they reached.
+  (cup.knockout||[]).forEach(round=>{
+   const label=round.length===8?'R16':round.length===4?'QF':round.length>8?'R'+(round.length*2):null;
+   if(!label)return;
+   const order=label==='R16'?16:label==='QF'?8:Number(label.replace('R',''))||12;
+   round.forEach(m=>{if(m.played&&m.winner){const loser=m.winner===m.home?m.away:m.home;if(!rank.has(loser))rank.set(loser,{label,order});}});
+  });
+  // Teams that did not qualify for the knockout stage are recorded as group-stage exits.
+  (cup.teams||[]).forEach(team=>{if(!rank.has(team.id))rank.set(team.id,{label:'Group Stage',order:99});});
+  const t=stats.get(chosen);if(t&&rank.has(chosen)){const placing=rank.get(chosen);rows.push({...t,position:placing.order,positionLabel:placing.label,seriesName:state.series.find(s=>s.id===cup.seriesId)?.name||'Unknown Series',leagueName:cup.name+' (Cup)',season:cup.season,createdAt:cup.createdAt||'',leagueStatus:'Completed'});}
+ }
+ rows.sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));
+ const total={w:0,d:0,l:0,bestRow:null};
+ rows.forEach(r=>{
+  total.w+=r.w;total.d+=r.d;total.l+=r.l;
+  // Best Position must preserve the competition type: Cup finishes use stage labels
+  // (Group Stage, R16, QF, etc.), while League finishes use numbered positions.
+  if(!total.bestRow||r.position<total.bestRow.position)total.bestRow=r;
+ });
+ document.getElementById('recordCount').textContent=rows.length+' season'+(rows.length===1?'':'s');
+ document.getElementById('recordWins').textContent=total.w;
+ document.getElementById('recordDraws').textContent=total.d;
+ document.getElementById('recordLosses').textContent=total.l;
+ document.getElementById('recordBest').innerHTML=total.bestRow===null?'—':`<span style="font-size:15px;white-space:nowrap">${recordPositionLabelDisplay(total.bestRow.positionLabel,total.bestRow.position)}</span>`;
+ document.getElementById('recordTitles').textContent=rows.filter(r=>r.position===1).length+' of '+rows.length;
+ document.getElementById('teamRecordDetails').innerHTML=rows.map(r=>`<tr><td>${esc(r.seriesName)}</td><td style="text-align:left"><b>${esc(r.leagueName)}</b></td><td>${esc(r.season)}</td><td><b>${recordPositionLabelDisplay(r.positionLabel,r.position)}</b></td><td>${r.mp}</td><td>${r.w}</td><td>${r.d}</td><td>${r.l}</td><td>${r.pts}</td><td>${r.leagueStatus}</td></tr>`).join('')||`<tr><td colspan="10" class="empty">${chosen?'No completed season records for this team yet.':'No team records yet. Create a league first.'}</td></tr>`;
+}
+
+function generateRounds(teams,double=true){let arr=teams.map(t=>t.id);if(arr.length%2)arr.push(null);const n=arr.length,first=[];for(let r=0;r<n-1;r++){let matches=[];for(let i=0;i<n/2;i++){let a=arr[i],b=arr[n-1-i];if(a&&b){if((r+i)%2===0)[a,b]=[b,a];matches.push({id:uid(),home:a,away:b,homeScore:null,awayScore:null,played:false})}}first.push(matches);arr=[arr[0],arr[n-1],...arr.slice(1,n-1)]}if(!double)return first;return first.concat(first.map(ms=>ms.map(m=>({id:uid(),home:m.away,away:m.home,homeScore:null,awayScore:null,played:false}))))}
+let currentRound=1;
+function teamName(id){let t=state.league?.teams.find(t=>t.id===id);return t?.name||'Unknown Team'}
+function isLeagueComplete(league){const matches=(league?.rounds||[]).flat();return matches.length>0&&matches.every(m=>m.played)}
+let podiumTimer=null;
+function showSeasonFinished(league){
+ const top=standingsFor(league).slice(0,4);
+ if(top.length<4)return;
+ const overlay=document.getElementById('podiumOverlay');
+ const reveal=document.getElementById('podiumReveal');
+ const final=document.getElementById('podiumFinal');
+ const close=document.getElementById('podiumClose');
+ document.getElementById('podiumSubtitle').textContent=`${league.name} · ${league.season}`;
+ document.getElementById('podiumTitle').textContent='The Final Standings';
+ final.classList.add('hidden');final.innerHTML='';close.classList.add('hidden');
+ reveal.classList.remove('hidden');
+ overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');
+ const revealOrder=[3,2,1,0];
+ const places=[
+  {label:'Champion',medal:'🏆',number:'1ST'},
+  {label:'Runner-up',medal:'🥈',number:'2ND'},
+  {label:'Third Place',medal:'🥉',number:'3RD'},
+  {label:'Fourth Place',medal:'🏅',number:'4TH'}
+ ];
+ let step=0;
+ const showNext=()=>{
+  if(step>=revealOrder.length){
+   reveal.classList.add('hidden');
+   document.getElementById('podiumTitle').textContent='Season Champions';
+   // Requested final visual order: 4th, 1st, 2nd, 3rd.
+   const displayOrder=[3,0,1,2];
+   final.innerHTML=displayOrder.map((rank,i)=>{
+    const team=top[rank],meta=places[rank];
+    return `<div class="podium-place-card ${rank===0?'first':''}"><div class="medal">${meta.medal}</div><div class="place-num">${meta.number}</div><div class="place-team">${esc(team.name)}</div><div class="place-pts">${team.pts} PTS</div></div>`;
+   }).join('');
+   final.classList.remove('hidden');close.classList.remove('hidden');
+   podiumTimer=null;return;
+  }
+  const rank=revealOrder[step],team=top[rank],meta=places[rank];
+  reveal.innerHTML=`<div class="podium-reveal-card"><div class="podium-medal">${meta.medal}</div><div class="podium-place">${meta.label}</div><div class="podium-team">${esc(team.name)}</div><div class="podium-points">${team.pts} POINTS</div></div>`;
+  step++;podiumTimer=setTimeout(showNext,1050);
+ };
+ showNext();
+}
+function closePodium(){
+ if(podiumTimer){clearTimeout(podiumTimer);podiumTimer=null;}
+ const overlay=document.getElementById('podiumOverlay');
+ overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');
+}
+
+function enterScore(matchId,side,val){
+ let m=state.league.rounds.flat().find(x=>x.id===matchId);if(!m)return;
+ const wasComplete=isLeagueComplete(state.league);
+ let input=val===''?null:Math.max(0,Math.min(99,parseInt(val,10)));
+ if(val!==''&&(!Number.isInteger(Number(val))||Number(val)<0))return;
+ m[side]=input;m.played=m.homeScore!==null&&m.awayScore!==null;
+ const justCompleted=!wasComplete&&isLeagueComplete(state.league)&&!state.league.completionNotified;
+ if(justCompleted)state.league.completionNotified=true;
+ const finishedLeague=justCompleted?state.league:null;
+ save();
+ if(finishedLeague)showSeasonFinished(finishedLeague);
+}
+function resetCurrentRound(){
+ const league=state.league;if(!league)return;
+ const roundIndex=currentRound-1;
+ const matches=league.rounds?.[roundIndex];if(!matches?.length)return;
+ const played=matches.filter(m=>m.played||m.homeScore!==null||m.awayScore!==null).length;
+ if(!played){alert(`Round ${currentRound} has no recorded scores to reset.`);return;}
+ if(!confirm(`Reset Round ${currentRound}?\n\nThis will clear the scores of ${played} recorded match(es) in this round only. Other rounds and fixtures will remain unchanged.`))return;
+ matches.forEach(m=>{m.homeScore=null;m.awayScore=null;m.played=false;});
+ // Allow the season-completion reveal to run again if this round is later completed again.
+ league.completionNotified=false;
+ save();renderFixtures();renderTable();renderDashboard();renderLeagues();renderRecords();
+}
+function renderFixtures(){let area=document.getElementById('fixtureArea');if(!state.league){area.innerHTML='<div class="empty">Create a league first to generate fixtures.</div>';return}let rounds=state.league.rounds,played=rounds.flat().filter(m=>m.played).length;document.getElementById('fixtureProgress').textContent=played+' / '+rounds.flat().length+' played';let opts=rounds.map((_,i)=>`<option value="${i+1}" ${currentRound===i+1?'selected':''}>Round ${i+1}</option>`).join('');let ms=rounds[currentRound-1]||[];area.innerHTML=`<div class="row between" style="margin-bottom:12px"><div><b>${esc(state.league.name)}</b><div class="muted" style="font-size:12px">${esc(state.league.season)} · ${played} matches completed</div></div><div class="roundbar"><select onchange="currentRound=+this.value;renderFixtures()">${opts}</select></div></div>`+ms.map(m=>`<div class="match"><div class="home"><div class="matchname">${esc(teamName(m.home))}</div><div class="status">HOME</div></div><div class="scorebox"><input type="number" min="0" max="99" aria-label="Home goals" value="${m.homeScore??''}" onchange="enterScore('${m.id}','homeScore',this.value)"><span>:</span><input type="number" min="0" max="99" aria-label="Away goals" value="${m.awayScore??''}" onchange="enterScore('${m.id}','awayScore',this.value)"></div><div class="away"><div class="matchname">${esc(teamName(m.away))}</div><div class="status">${m.played?'FULL TIME':'AWAY'}</div></div></div>`).join('')+`<div class="row between" style="margin-top:14px;flex-wrap:wrap"><button class="btn secondary" ${currentRound===1?'disabled':''} onclick="currentRound--;renderFixtures()">← Previous</button><span class="pill">Round ${currentRound} of ${rounds.length}</span><button class="btn secondary" ${currentRound===rounds.length?'disabled':''} onclick="currentRound++;renderFixtures()">Next →</button></div><div class="row" style="justify-content:flex-end;margin-top:12px"><button class="btn danger" onclick="resetCurrentRound()">↺ Reset This Round</button></div>`}
+function stats(){return statsFor(state.league)}
+function statsFor(l){if(!l)return[];let s=l.teams.map(t=>({...t,mp:0,w:0,d:0,l:0,gf:0,ga:0,gd:0,pts:0,opponents:[]}));let by=Object.fromEntries(s.map(x=>[x.id,x]));for(let m of l.rounds.flat()){if(!m.played)continue;let h=by[m.home],a=by[m.away],hs=m.homeScore,as=m.awayScore;if(!h||!a)continue;h.mp++;a.mp++;h.gf+=hs;h.ga+=as;a.gf+=as;a.ga+=hs;h.opponents.push({id:a.id,pts:hs>as?3:hs===as?1:0,gf:hs,ga:as});a.opponents.push({id:h.id,pts:as>hs?3:as===hs?1:0,gf:as,ga:hs});if(hs>as){h.w++;h.pts+=3;a.l++}else if(hs<as){a.w++;a.pts+=3;h.l++}else{h.d++;a.d++;h.pts++;a.pts++}}for(let x of s)x.gd=x.gf-x.ga;return s}
+function standings(){return standingsFor(state.league)}
+function standingsFor(l){let s=statsFor(l);if(!s.length)return[];let groups={};s.forEach(x=>(groups[x.pts]??=[]).push(x));let ordered=[];Object.keys(groups).map(Number).sort((a,b)=>b-a).forEach(points=>{let g=groups[points];g.sort((a,b)=>b.gd-a.gd||b.gf-a.gf);let sub={};g.forEach(x=>(sub[`${x.gd}|${x.gf}`]??=[]).push(x));Object.keys(sub).forEach(k=>{let tied=sub[k];if(tied.length>1){let ids=new Set(tied.map(x=>x.id));let mini=tied.map(x=>{let p=0,gf=0,ga=0;x.opponents.filter(o=>ids.has(o.id)).forEach(o=>{p+=o.pts;gf+=o.gf;ga+=o.ga});return {...x,h2hPts:p,h2hGd:gf-ga,h2hGf:gf}});mini.sort((a,b)=>b.h2hPts-a.h2hPts||b.h2hGd-a.h2hGd||b.h2hGf-a.h2hGf);tied=mini}ordered.push(...tied)})});return ordered}
+function lastFiveForm(league,teamId){
+ const played=[];
+ (league.rounds||[]).forEach((round,roundIndex)=>round.forEach((m,matchIndex)=>{
+  if(m.played&&(m.home===teamId||m.away===teamId))played.push({...m,roundIndex,matchIndex});
+ }));
+ return played.sort((a,b)=>a.roundIndex-b.roundIndex||a.matchIndex-b.matchIndex).slice(-5).map(m=>{
+  const goalsFor=m.home===teamId?m.homeScore:m.awayScore;
+  const goalsAgainst=m.home===teamId?m.awayScore:m.homeScore;
+  return goalsFor>goalsAgainst?'W':goalsFor<goalsAgainst?'L':'D';
+ });
+}
+function renderTable(){let body=document.getElementById('standingsBody');if(!state.league){body.innerHTML='<tr><td colspan="11" class="empty">No active league yet.</td></tr>';return}document.getElementById('tableSeason').textContent=state.league.name+' · '+state.league.season;let s=standings();body.innerHTML=s.map((t,i)=>{let form=lastFiveForm(state.league,t.id);let dots=Array.from({length:5},(_,j)=>{let result=form[j];let cls=result==='W'?'w':result==='D'?'d':result==='L'?'l':'form-empty';return `<span class="form-dot ${cls}" title="${result==='W'?'Win':result==='D'?'Draw':result==='L'?'Loss':'Not played'}">${result||'·'}</span>`}).join('');return `<tr><td class="rank">${i+1}</td><td><div class="club"><span class="mini">${esc((t.short||t.name.slice(0,2)).slice(0,3))}</span>${esc(t.name)}</div></td><td>${t.mp}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td><td>${t.gf}</td><td>${t.ga}</td><td>${t.gd>0?'+'+t.gd:t.gd}</td><td class="pts">${t.pts}</td><td><div class="form">${dots}</div></td></tr>`}).join('')}
+function renderDashboard(){document.getElementById('statTeams').textContent=state.teams.filter(t=>!t.archived).length;document.getElementById('statLeague').textContent=state.leagues.length+state.cups.length;let total=state.league?state.league.rounds.flat().length:0,p=state.league?state.league.rounds.flat().filter(m=>m.played).length:0;document.getElementById('statPlayed').textContent=state.league?`${p} / ${total}`:'0 / 0';document.getElementById('statRemaining').textContent=state.league?total-p:0;document.getElementById('seasonTag').textContent=state.league?state.league.season:'YOUR FOOTBALL WORLD'}
+function render(){renderSidebar();renderDashboard();renderTeams();renderSeries();renderSeriesDetail();renderLeagueDetail();renderPicker();updateCupPicker();renderCups();renderFixtures();renderTable();renderLeagues();renderRecords()}
+function exportBackup(){let blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='game-creator-backup.json';a.click();URL.revokeObjectURL(a.href)}
+function importBackup(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!Array.isArray(x.teams)||(!('league'in x)&&!Array.isArray(x.leagues)))throw Error();if(confirm('Replace all current data with this backup?')){state=x;if(!Array.isArray(state.cups))state.cups=[];if(!Array.isArray(state.series))state.series=[{id:'series_default',name:'My Football World'}];if(!Array.isArray(state.leagues))state.leagues=state.league?[state.league]:[];state.leagues.forEach((l,i)=>{l.id=l.id||('league_'+i+'_'+Date.now());l.seriesId=l.seriesId||state.series[0].id;l.status=l.status||'saved'});state.activeSeriesId=state.activeSeriesId||state.league?.seriesId||state.series[0].id;state.league=state.leagues.find(l=>l.id===state.activeLeagueId)||state.leagues.find(l=>l.id===x.league?.id)||state.leagues[0]||null;state.activeLeagueId=state.league?.id||null;save();alert('Backup imported.')}}catch(err){alert('Invalid Game Creator backup file.')}};r.readAsText(f);e.target.value=''}
+render();
+</script>
+<script>
+// Progressive Web App: cache the local app shell for reliable offline launching.
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(err => console.warn('Service worker registration failed:', err));
+  });
+}
+</script></body></html>
